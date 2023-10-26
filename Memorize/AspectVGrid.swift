@@ -19,7 +19,7 @@ struct AspectVGrid<Item: Identifiable, ItemView: View>: View {
     }
     
     var body: some View {
-        GeometryReader { geometry in
+        GeometryReader { geometry in // geometryReader sans ScrollView pour que ça fonctionne !
             let gridItemSize = gridItemWidthThatFits(
                 count: items.count,
                 size: geometry.size,
@@ -40,14 +40,13 @@ struct AspectVGrid<Item: Identifiable, ItemView: View>: View {
     ) -> CGFloat {
         let count = CGFloat(count)
         var columnCount = 1.0
-        let sizeheight = 700.0 // pour debug : ne fonctionne pas avec size.height
         print("count: \(count), size.width: \(size.width), size.height: \(size.height)")
         repeat {
             let width = size.width / columnCount
             let height = width / aspectRatio
             
             let rowCount = (count / columnCount).rounded(.up)
-            if rowCount * height < sizeheight {
+            if rowCount * height < size.height {
                 let fits = (size.width / columnCount).rounded(.down)
                 print("gridItemWidthThatFits: \(fits)")
                 return fits
@@ -55,11 +54,11 @@ struct AspectVGrid<Item: Identifiable, ItemView: View>: View {
             columnCount += 1
         } while columnCount < count
         // FIXME: calcul incorrect ? ne fonctionne pas !
-        let fits = min(size.width / Double(count), sizeheight * aspectRatio).rounded(.down)
+        let fits = min(size.width / Double(count), size.height * aspectRatio).rounded(.down)
         print("gridItemWidthThatFits: \(fits)")
         return fits
         
-        return 85
+//        return 85
     }
     
 }
