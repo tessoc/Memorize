@@ -40,7 +40,7 @@ struct AspectVGrid<Item: Identifiable, ItemView: View>: View {
     ) -> CGFloat {
         let count = CGFloat(count)
         var columnCount = 1.0
-        print("count: \(count), size.width: \(size.width), size.height: \(size.height)")
+//        print("count: \(count), size.width: \(size.width), size.height: \(size.height)")
         repeat {
             let width = size.width / columnCount
             let height = width / aspectRatio
@@ -48,14 +48,14 @@ struct AspectVGrid<Item: Identifiable, ItemView: View>: View {
             let rowCount = (count / columnCount).rounded(.up)
             if rowCount * height < size.height {
                 let fits = (size.width / columnCount).rounded(.down)
-                print("gridItemWidthThatFits: \(fits)")
+//                print("gridItemWidthThatFits: \(fits)")
                 return fits
             }
             columnCount += 1
         } while columnCount < count
         // FIXME: calcul incorrect ? ne fonctionne pas !
         let fits = min(size.width / Double(count), size.height * aspectRatio).rounded(.down)
-        print("gridItemWidthThatFits: \(fits)")
+//        print("gridItemWidthThatFits: \(fits)")
         return fits
         
 //        return 85
