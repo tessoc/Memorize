@@ -27,6 +27,8 @@ struct CardView: View {
                     .minimumScaleFactor(Constants.FontSize.scaleFactor)
                     .aspectRatio(1,contentMode: .fit)
                     .padding(Constants.Pie.inset)
+                    .rotationEffect(.degrees(card.isMatched ? 360 : 0))
+                    .animation(.spin(duration: 2), value: card.isMatched)
             )
             .padding(Constants.inset)
             .cardify(isFaceUp: card.isFaceUp)
@@ -48,6 +50,15 @@ struct CardView: View {
         }
     }
 }
+
+extension Animation {
+    static func spin(duration: TimeInterval) -> Animation {
+        .linear(duration: 1).repeatForever(autoreverses: false)
+    }
+}
+
+
+
 
 #Preview("CardView") {
     VStack {
